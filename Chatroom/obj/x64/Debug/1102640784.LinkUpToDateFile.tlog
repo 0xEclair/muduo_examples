@@ -1,0 +1,1 @@
+g++ -o "/root/projects/Chatroom/bin/x64/Debug/Chatroom.out" -Wl,--no-undefined -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack /root/projects/Chatroom/../Chatroom/obj/x64/Debug/client.o -lmuduo_net -lmuduo_base -lpthread
