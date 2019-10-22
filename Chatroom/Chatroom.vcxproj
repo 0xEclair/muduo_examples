@@ -78,12 +78,17 @@
     <None Include="codec.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="server.cc" />
+    <ClCompile Include="server.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="client.cc" />
+    <None Include="client.cc" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <LibraryDependencies>muduo_net;muduo_base;pthread</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Link>
       <LibraryDependencies>muduo_net;muduo_base;pthread</LibraryDependencies>
     </Link>
