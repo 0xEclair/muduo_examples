@@ -43,6 +43,7 @@ const muduo::string& ProtobufCodec::errorCodeToString(ErrorCode errorCode){
 void ProtobufCodec::fillEmptyBuffer(Buffer* buf, const Message& message) {
 	// buf->retrieveAll();
 	const auto& type_name = message.GetTypeName();
+	// +1 是因为end有个'\0'
 	auto name_len = static_cast<int32_t>(type_name.size() + 1);
 	buf->appendInt32(name_len);
 	buf->append(type_name.c_str(), name_len);
@@ -53,6 +54,7 @@ void ProtobufCodec::fillEmptyBuffer(Buffer* buf, const Message& message) {
 	buf->ensureWritableBytes(byte_size);
 
 	auto* start = reinterpret_cast<uint8_t*>(buf->beginWrite());
+	// SerializeWithCachedSizesToArray()把message内容按 字节 写入start指向的地方
 	auto* end = message.SerializeWithCachedSizesToArray(start);
 	if (end - start != byte_size) {
 		ByteSizeConsistencyError(byte_size, message.ByteSize(), static_cast<int>(end - start));
@@ -132,10 +134,14 @@ std::shared_ptr<Message> ProtobufCodec::parse(const char* buf, int len, ErrorCod
 	if (check_sum == expected_check_sum) {
 		// get message type name
 		auto name_len = asInt32(buf);
+		// 2 * kHeaderLen 应该是name_name和check_num的长度
+		// 可以没有protobuf data 即 name_len=len-2*kHeaderLen
 		if (name_len >= 2 && name_len <= len - 2 * kHeaderLen) {
 			std::string type_name(buf + kHeaderLen, buf + kHeaderLen + name_len - 1);
 			message.reset(createMessage(type_name));
 			if (message) {
+				// kHeaderLen是name_len部分的4字节
+				// data是protobuf_data的start
 				const auto* data = buf + kHeaderLen + name_len;
 				auto data_len = len - name_len - 2 * kHeaderLen;
 				if (message->ParseFromArray(data, data_len)) {

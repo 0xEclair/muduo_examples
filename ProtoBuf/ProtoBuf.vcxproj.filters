@@ -21,15 +21,21 @@
     <None Include="query.pb.h">
       <Filter>codec</Filter>
     </None>
+    <None Include="codec_test.cc">
+      <Filter>codec</Filter>
+    </None>
+    <None Include="dispater_test.cc">
+      <Filter>codec</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="codec_test.cc">
-      <Filter>codec</Filter>
-    </ClCompile>
     <ClCompile Include="codec.cc">
       <Filter>codec</Filter>
     </ClCompile>
     <ClCompile Include="query.pb.cc">
+      <Filter>codec</Filter>
+    </ClCompile>
+    <ClCompile Include="server.cc">
       <Filter>codec</Filter>
     </ClCompile>
   </ItemGroup>
