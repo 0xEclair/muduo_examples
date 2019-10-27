@@ -84,6 +84,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dispater_test.cc" />
+    <None Include="client.cc" />
+    <None Include="dispatcher.cc" />
     <ClCompile Include="query.pb.cc" />
     <ClCompile Include="codec.cc" />
     <None Include="codec_test.cc" />

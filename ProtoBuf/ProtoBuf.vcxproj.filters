@@ -27,6 +27,12 @@
     <None Include="dispater_test.cc">
       <Filter>codec</Filter>
     </None>
+    <None Include="dispatcher.cc">
+      <Filter>codec</Filter>
+    </None>
+    <None Include="client.cc">
+      <Filter>codec</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="codec.cc">
